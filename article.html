@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article - Multi-Objective Wide Corridor Routing</title>
+    <title>Article - Optimal Routing of Wide Multi-Modal Energy</title>
     <style>
-        /* CSS variables for theme colors */
+        /* CSS Variables */
         :root {
             --primary-color: #003366;
             --secondary-color: #00509e;
@@ -13,87 +13,129 @@
             --background-color: #f8f9fa;
         }
 
-        /* Reset and base styles */
+        /* Basic Setup */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
-            line-height: 1.6;
+            line-height: 1.8;
             margin: 0;
             padding: 0;
         }
 
-        /* Container layout */
         .container {
             max-width: 800px;
             margin: 40px auto;
             background: #ffffff;
-            padding: 30px;
+            padding: 40px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
         }
 
-        /* Header styling */
+        /* Typography */
         header {
             text-align: center;
             border-bottom: 2px solid var(--primary-color);
             padding-bottom: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         header h1 {
             color: var(--primary-color);
-            margin: 0 0 10px 0;
-            font-size: 2em;
+            font-size: 2.2em;
+            margin-bottom: 10px;
         }
 
-        /* Avatar styles */
-        .avatar-wrapper {
-            text-align: center;
+        header h2 {
+            font-size: 1.1em;
+            color: #555;
+            font-weight: 400;
+        }
+
+        .article-section {
+            margin-bottom: 50px;
+            text-align: justify;
+            /* Scroll margin to offset fixed headers if any */
+            scroll-margin-top: 50px; 
+        }
+
+        .article-section h3 {
+            color: var(--primary-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
             margin-bottom: 20px;
-            padding: 15px;
-            background-color: #eef2f5;
-            border-radius: 8px;
+        }
+
+        .article-section p {
+            margin-bottom: 20px;
+        }
+
+        /* Fixed Avatar Styling */
+        .fixed-avatar-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            display: flex;
+            align-items: flex-end;
+            flex-direction: column;
         }
 
         .avatar-icon {
             font-size: 4em;
             cursor: pointer;
-            transition: transform 0.2s;
-            display: inline-block;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            padding: 5px;
+            border: 3px solid transparent;
+        }
+
+        .avatar-icon.active {
+            border-color: var(--secondary-color);
+            animation: pulse 2s infinite;
         }
 
         .avatar-icon:hover {
             transform: scale(1.1);
         }
 
-        .instruction-text {
-            display: block;
+        .speech-bubble {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
             font-size: 0.9em;
-            color: var(--secondary-color);
-            font-weight: bold;
-            margin-top: 10px;
+            max-width: 250px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: left;
+            position: relative;
+            transition: opacity 0.3s;
         }
 
-        /* Buttons and links */
-        .download-btn {
-            display: inline-block;
-            background-color: var(--secondary-color);
-            color: #ffffff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-top: 15px;
+        /* Bubble arrow */
+        .speech-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            right: 30px;
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: var(--secondary-color) transparent transparent transparent;
         }
-        
-        .download-btn:hover {
-            background-color: var(--primary-color);
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 80, 158, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 80, 158, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 80, 158, 0); }
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 30px;
             color: var(--secondary-color);
             text-decoration: none;
             font-weight: bold;
@@ -101,65 +143,146 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Multi-Objective Wide Corridor Routing: Enhancing Spatial Optimization for Infrastructure Planning</h1>
-        </header>
 
-        <!-- Avatar Section -->
-        <div class="avatar-wrapper">
-            <!-- Clicking the avatar triggers the playExplanation function -->
-            <div class="avatar-icon" onclick="playExplanation()" id="avatarEmoji">🤖</div>
-            <span class="instruction-text" id="avatarText">Click the avatar to hear the explanation!</span>
+    <!-- Fixed Avatar that follows the user -->
+    <div class="fixed-avatar-wrapper">
+        <div class="speech-bubble" id="speechBubble">
+            Olá! Clique em mim para ativar o Guia de Áudio. Eu explicarei o artigo conforme você rola a página.
         </div>
-
-        <section>
-            <h3>Abstract</h3>
-            <p>Infrastructure planning, such as routing highways, powerlines, and railways, requires balancing complex spatial constraints, financial costs, and environmental impacts. Traditional Least-Cost Path (LCP) analyses often simplify these routes to one-dimensional lines and optimize for a single aggregated objective. Building upon recent advancements in spatial routing algorithms, this paper presents a novel methodological improvement: the Multi-Objective Wide A (MOA) algorithm. This approach not only accounts for the physical footprint of the infrastructure by optimizing wide corridors rather than single-pixel lines, but it also simultaneously evaluates competing objectives (e.g., financial vs. environmental costs) to generate a Pareto front of optimal solutions. Our results demonstrate that this method successfully identifies a diverse set of feasible, non-dominated wide corridors, providing decision-makers with a robust framework for complex spatial planning.</p>
-            
-            <a href="Article_Output.pdf" class="download-btn" download>Download Article_Output.pdf</a>
-        </section>
-
-        <a href="index.html" class="back-link">← Back to Profile</a>
+        <div class="avatar-icon" id="avatarEmoji" onclick="toggleAudioGuide()">👨‍🏫</div>
     </div>
 
-    <!-- Script to handle Text-to-Speech functionality -->
+    <div class="container">
+        <header>
+            <h1>Optimal Routing of Wide Multi-Modal Energy and Infrastructure Corridors</h1>
+            <h2>Mehdi Salamati, Xin Wang, Jennifer Winter and Hamidreza Zareipour</h2>
+            <h2>ISPRS Int. J. Geo-Inf. 2022</h2>
+        </header>
+
+        <!-- Full Article Content Sections -->
+        <div id="content-wrapper">
+            
+            <section class="article-section" id="sec-abstract">
+                <h3>Abstract</h3>
+                <p>A multi-modal corridor accommodates multiple modes of energy and transportation infrastructure within the same right-of-way. The existing literature on corridor routing in raster space often focuses on one mode with no consideration of the width. This is not a realistic assumption, especially if multiple modes are to co-exist within the same wide right-of-way.</p>
+                <p>Moreover, newer routing methods that consider corridor width cannot take into account multi-modality and the arrangement of modes within a corridor. We developed two multi-modal wide-corridor routing methods using raster data. In the first method, the cost rasters of all modes are weighted and aggregated into a single composite on which a wide LCP is found. This wide LCP is then divided among the modes based on the desired arrangement.</p>
+                <p>The second method uses a directed transformed graph in which the weight of each edge is calculated using different layers of cost data based on the edge direction, the desired widths and arrangement of the modes. Comparative analyses using synthetic datasets show the superior performance of the second proposed method in finding a muti-modal corridor in comparison with the first mode, and in finding a single-modal corridor when compared to the existing methods.</p>
+            </section>
+
+            <section class="article-section" id="sec-intro">
+                <h3>1. Introduction</h3>
+                <p>This paper proposes two methods for finding a least-cost path (LCP) for wide multi-modal transportation corridors in raster space. A multi-modal transportation corridor contains two or more parallel transportation modes within the same right-of-way. Examples of multi-modal corridors include the Trans-European Transport Network, the Lamu Port South Sudan-Ethiopia Transport (LAPSSET) corridor, and Australia’s Callide infrastructure corridor.</p>
+                <p>Finding an optimal path for a multi-modal corridor is more complicated than a single-mode narrow path. This complexity has roots in the two main characteristics of such corridors. First, a multi-modal corridor needs to be wide enough to safely accommodate all transportation modes. Second, the path has to be acceptable for all different modes even though various modes have different movement constraints and different environmental impacts.</p>
+                <p>Cost raster data along with GIS are widely used for optimal linear infrastructure routing, such as power lines, road, railways and pipelines. In raster data format, the study area is divided into a square grid, and each grid cell has a value from specific criterion and geographic position. Generally, computerized routing methods integrate GIS tools and multi-criteria decision analysis (MCDA) to find an LCP in raster space.</p>
+            </section>
+
+            <section class="article-section" id="sec-related">
+                <h3>2. Related Work and Gaps</h3>
+                <p>Cost raster data and GIS are widely used to find LCPs for linear infrastructure such as roads, railways, power transmission lines, pipelines, and siting wildlife corridors. Each transportation mode’s important criteria and ranking is different. Some studies in the literature identify these factors and weighting methods for a specific type of infrastructure.</p>
+                <p>There are two challenges in finding the shortest path for a wide multi-modal corridor that make this process more complex than single-mode, narrow-path routing. First, there is little extant work on finding wide corridors. Second, current wide LCP-finding methods do not take into account the multi-modality of a corridor.</p>
+            </section>
+
+            <section class="article-section" id="sec-methodology">
+                <h3>3. Methodology</h3>
+                <p>We propose two methods for determining the optimal routing of wide multi-modal infrastructure corridors. The first one finds a wide LCP on the accumulated cost raster (FWLA). In FWLA, firstly, all cost rasters for all modes are weighted and aggregated to create a single composite cost raster and, secondly, a wide LCP is found on this cost raster.</p>
+            </section>
+
+            <section class="article-section" id="sec-fwla">
+                <h3>3.1. Finding a Wide LCP on the Accumulated Cost Raster (FWLA)</h3>
+                <p>There are two challenges in finding the LCP of a multi-modal corridor—first, finding a wide rather than a narrow path, and second, each cell located in the found wide-LCP should be suitable and have a low cost for the mode in that cell. The first challenge can be addressed by any of the existing wide LCP method; however, the second challenge cannot be solved completely.</p>
+                <p>Existing wide LCP methods cannot take into account mode arrangement, i.e., the order of modes and the width of each. Thus, to make sure that each cell located in the corridor is suitable for its corresponding mode, the cell must be suitable for all modes. However, in this way, unnecessary constraints, i.e., to have low costs for all modes, will be imposed on the model and may result in non-optimal paths.</p>
+            </section>
+
+        </div>
+
+        <a href="Article_Output.pdf" style="display: block; text-align: center; margin-top: 30px; padding: 15px; background: #00509e; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Download PDF Completo</a>
+        <a href="index.html" class="back-link">← Voltar ao Perfil</a>
+    </div>
+
+    <!-- JavaScript Logic for Scroll-Triggered Text-to-Speech -->
     <script>
-        // Function to synthesize speech and explain the article
-        function playExplanation() {
-            // Check if the browser supports SpeechSynthesis API
-            if ('speechSynthesis' in window) {
-                // Cancel any ongoing speech
-                window.speechSynthesis.cancel();
+        // State variables
+        let isAudioEnabled = false;
+        let currentActiveSection = '';
 
-                // Define the explanation text
-                const explanationText = "Welcome! This paper introduces the MOA star algorithm to map wide infrastructure corridors. It helps balance financial construction costs with environmental impacts, providing a complete Pareto front of optimal solutions. You can download the full PDF below.";
+        // Dictionary containing the audio summaries for each section in Portuguese
+        const sectionExplanations = {
+            'sec-abstract': "Resumo: Este artigo analisa a criação de corredores que acomodam várias infraestruturas ao mesmo tempo, como rodovias e linhas de energia. Os autores propõem dois novos métodos para calcular a melhor rota considerando a largura real e a disposição de cada modalidade.",
+            'sec-intro': "Introdução: Aqui, os pesquisadores explicam que planejar um corredor multimodal é complexo porque ele precisa ser largo o suficiente e atender às restrições ambientais e físicas de diferentes modos de transporte simultaneamente.",
+            'sec-related': "Trabalhos Relacionados e Lacunas: Nesta parte, o artigo revisa a literatura existente, apontando que a maioria dos métodos atuais ignora a largura do corredor ou falha em considerar as necessidades específicas de múltiplas modalidades.",
+            'sec-methodology': "Metodologia: Os autores propõem duas abordagens. A primeira agrega os custos de todos os modos em um único mapa e calcula a rota. Vamos ver os detalhes a seguir.",
+            'sec-fwla': "Encontrando o caminho de menor custo: Esta subseção explica os desafios do primeiro método. Ao tentar acomodar tudo em um único mapa de custos, o algoritmo pode criar restrições desnecessárias, já que não leva em conta a ordem e a largura de cada modo dentro do corredor."
+        };
 
-                // Create a new speech synthesis utterance instance
-                const speech = new SpeechSynthesisUtterance(explanationText);
-                
-                // Set language to English for proper pronunciation
-                speech.lang = 'en-US';
-                
-                // Optional: Adjust speech rate and pitch
-                speech.rate = 1.0;
-                speech.pitch = 1.0;
+        // Function to toggle the audio guide on and off
+        function toggleAudioGuide() {
+            const avatar = document.getElementById('avatarEmoji');
+            const bubble = document.getElementById('speechBubble');
+            
+            isAudioEnabled = !isAudioEnabled;
 
-                // Update UI text while speaking
-                document.getElementById('avatarText').innerText = "Speaking... 🔊";
-                
-                // Reset UI text when finished speaking
-                speech.onend = function() {
-                    document.getElementById('avatarText').innerText = "Click the avatar to hear the explanation again!";
-                };
-
-                // Speak the generated text
-                window.speechSynthesis.speak(speech);
+            if (isAudioEnabled) {
+                avatar.classList.add('active');
+                bubble.innerText = "Guia ativado! Role a página lentamente para ouvir a explicação de cada parte.";
+                speakText("Guia de áudio ativado. Role a página para que eu explique o conteúdo para você.");
             } else {
-                // Fallback for older browsers
-                alert("Your browser does not support text-to-speech features.");
+                avatar.classList.remove('active');
+                bubble.innerText = "Guia de áudio desativado. Clique em mim para reativar.";
+                window.speechSynthesis.cancel();
+                currentActiveSection = ''; // Reset section to allow replay if enabled again
             }
         }
+
+        // Core function to synthesize speech
+        function speakText(text) {
+            if (!isAudioEnabled || !('speechSynthesis' in window)) return;
+            
+            // Cancel any ongoing speech before starting a new one
+            window.speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'pt-BR';
+            utterance.rate = 1.0;
+            utterance.pitch = 1.0;
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Intersection Observer configuration
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -60% 0px', // Triggers when the section is near the top of the viewport
+            threshold: 0
+        };
+
+        // Callback function executed when a section enters the viewport
+        const observerCallback = (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+                    
+                    // If the section changed and audio is enabled, read the new summary
+                    if (currentActiveSection !== sectionId) {
+                        currentActiveSection = sectionId;
+                        
+                        if (isAudioEnabled && sectionExplanations[sectionId]) {
+                            const sectionTitle = entry.target.querySelector('h3').innerText;
+                            document.getElementById('speechBubble').innerText = "Explicando agora: " + sectionTitle;
+                            speakText(sectionExplanations[sectionId]);
+                        }
+                    }
+                }
+            });
+        };
+
+        // Initialize the Intersection Observer
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        // Attach the observer to all elements with the class 'article-section'
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.article-section');
+            sections.forEach(section => observer.observe(section));
+        });
     </script>
 </body>
 </html>
