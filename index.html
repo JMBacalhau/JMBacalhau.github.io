@@ -85,6 +85,68 @@
         .institution {
             font-style: italic;
         }
+
+        /* Avatar and Speech Bubble Styles */
+        .avatar-container {
+            display: inline-block;
+            position: relative;
+            margin-left: 10px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        .avatar {
+            font-size: 1.5em;
+            background: var(--background-color);
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .avatar:hover {
+            transform: scale(1.1);
+        }
+
+        .speech-bubble {
+            visibility: hidden;
+            width: 260px;
+            background-color: var(--secondary-color);
+            color: #ffffff;
+            text-align: left;
+            border-radius: 8px;
+            padding: 15px;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -130px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85em;
+            font-weight: normal;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            line-height: 1.4;
+        }
+
+        /* Creates the little triangle pointer for the speech bubble */
+        .speech-bubble::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -10px;
+            border-width: 10px;
+            border-style: solid;
+            border-color: var(--secondary-color) transparent transparent transparent;
+        }
+
+        /* Shows the bubble when hovering over the avatar container */
+        .avatar-container:hover .speech-bubble {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -142,9 +204,16 @@
         <section>
             <h3>Publicações e Pesquisas</h3>
             <ul>
-                <!-- Link to the newly created article page -->
                 <li>
                     <strong>Artigo Científico:</strong> <a href="article.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Multi-Objective Wide Corridor Routing: Enhancing Spatial Optimization for Infrastructure Planning</a>
+                    
+                    <!-- Avatar and Speech Bubble Container -->
+                    <div class="avatar-container">
+                        <span class="avatar">👨‍💻</span>
+                        <div class="speech-bubble">
+                            Hi! This paper introduces the MOA* algorithm to map wide infrastructure corridors, helping balance construction costs with environmental impacts. Click the link to read the abstract!
+                        </div>
+                    </div>
                 </li>
                 <li>
                     <strong>Pesquisa Aplicada:</strong> <em>"Índice de Remanejamento em SDMT - Planejamento da Distribuição"</em> (Material de pesquisa corporativa - EDP).
