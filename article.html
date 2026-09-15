@@ -23,7 +23,7 @@
             padding: 0;
         }
 
-        /* Main container layout */
+        /* Container layout */
         .container {
             max-width: 800px;
             margin: 40px auto;
@@ -47,17 +47,32 @@
             font-size: 2em;
         }
 
-        /* Section layout */
-        section {
-            margin-bottom: 30px;
-            text-align: justify;
+        /* Avatar styles */
+        .avatar-wrapper {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #eef2f5;
+            border-radius: 8px;
         }
 
-        section h3 {
-            color: var(--primary-color);
-            border-bottom: 1px solid #eeeeee;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
+        .avatar-icon {
+            font-size: 4em;
+            cursor: pointer;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .avatar-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .instruction-text {
+            display: block;
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-top: 10px;
         }
 
         /* Buttons and links */
@@ -91,15 +106,60 @@
             <h1>Multi-Objective Wide Corridor Routing: Enhancing Spatial Optimization for Infrastructure Planning</h1>
         </header>
 
+        <!-- Avatar Section -->
+        <div class="avatar-wrapper">
+            <!-- Clicking the avatar triggers the playExplanation function -->
+            <div class="avatar-icon" onclick="playExplanation()" id="avatarEmoji">🤖</div>
+            <span class="instruction-text" id="avatarText">Click the avatar to hear the explanation!</span>
+        </div>
+
         <section>
             <h3>Abstract</h3>
-            <p>Infrastructure planning, such as routing highways, powerlines, and railways, requires balancingcomplex spatial constraints, financial costs, and environmental impacts. Traditional Least-CostPath (LCP) analyses often simplify these routes to one-dimensional lines and optimize for asingle aggregated objective. Building upon recent advancements in spatial routing algorithms,this paper presents a novel methodological improvement: the Multi-Objective Wide A (MOA)algorithm. This approach not only accounts for the physical footprint of the infrastructure byoptimizing wide corridors rather than single-pixel lines, but it also simultaneously evaluatescompeting objectives (e.g., financial vs. environmental costs) to generate a Pareto front ofoptimal solutions. Our results demonstrate that this method successfully identifies a diverseset of feasible, non-dominated wide corridors, providing decision-makers with a robust framework for complex spatial planning.</p>
+            <p>Infrastructure planning, such as routing highways, powerlines, and railways, requires balancing complex spatial constraints, financial costs, and environmental impacts. Traditional Least-Cost Path (LCP) analyses often simplify these routes to one-dimensional lines and optimize for a single aggregated objective. Building upon recent advancements in spatial routing algorithms, this paper presents a novel methodological improvement: the Multi-Objective Wide A (MOA) algorithm. This approach not only accounts for the physical footprint of the infrastructure by optimizing wide corridors rather than single-pixel lines, but it also simultaneously evaluates competing objectives (e.g., financial vs. environmental costs) to generate a Pareto front of optimal solutions. Our results demonstrate that this method successfully identifies a diverse set of feasible, non-dominated wide corridors, providing decision-makers with a robust framework for complex spatial planning.</p>
             
-            <!-- Download Link referencing the file verbatim -->
             <a href="Article_Output.pdf" class="download-btn" download>Download Article_Output.pdf</a>
         </section>
 
         <a href="index.html" class="back-link">← Back to Profile</a>
     </div>
+
+    <!-- Script to handle Text-to-Speech functionality -->
+    <script>
+        // Function to synthesize speech and explain the article
+        function playExplanation() {
+            // Check if the browser supports SpeechSynthesis API
+            if ('speechSynthesis' in window) {
+                // Cancel any ongoing speech
+                window.speechSynthesis.cancel();
+
+                // Define the explanation text
+                const explanationText = "Welcome! This paper introduces the MOA star algorithm to map wide infrastructure corridors. It helps balance financial construction costs with environmental impacts, providing a complete Pareto front of optimal solutions. You can download the full PDF below.";
+
+                // Create a new speech synthesis utterance instance
+                const speech = new SpeechSynthesisUtterance(explanationText);
+                
+                // Set language to English for proper pronunciation
+                speech.lang = 'en-US';
+                
+                // Optional: Adjust speech rate and pitch
+                speech.rate = 1.0;
+                speech.pitch = 1.0;
+
+                // Update UI text while speaking
+                document.getElementById('avatarText').innerText = "Speaking... 🔊";
+                
+                // Reset UI text when finished speaking
+                speech.onend = function() {
+                    document.getElementById('avatarText').innerText = "Click the avatar to hear the explanation again!";
+                };
+
+                // Speak the generated text
+                window.speechSynthesis.speak(speech);
+            } else {
+                // Fallback for older browsers
+                alert("Your browser does not support text-to-speech features.");
+            }
+        }
+    </script>
 </body>
 </html>
