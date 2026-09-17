@@ -4,74 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article - Optimal Routing of Wide Multi-Modal Energy</title>
+    <!-- External stylesheet linked exactly like index.html -->
+    <link rel="stylesheet" href="css/styles.css">
     <style>
-        /* CSS Variables */
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #00509e;
-            --text-color: #333333;
-            --background-color: #f8f9fa;
-        }
-
-        /* Basic Setup */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        /* Typography */
-        header {
-            text-align: center;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 40px;
-        }
-
-        header h1 {
-            color: var(--primary-color);
-            font-size: 2.2em;
-            margin-bottom: 10px;
-        }
-
-        header h2 {
-            font-size: 1.1em;
-            color: #555;
-            font-weight: 400;
-        }
-
+        /* Article-specific adjustments that integrate with styles.css */
         .article-section {
-            margin-bottom: 50px;
+            margin-bottom: 2.5rem;
             text-align: justify;
-            /* Scroll margin to offset fixed headers if any */
-            scroll-margin-top: 50px; 
-        }
-
-        .article-section h3 {
-            color: var(--primary-color);
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            scroll-margin-top: 80px; /* Aligns with sticky nav and audio trigger */
         }
 
         .article-section p {
-            margin-bottom: 20px;
+            margin-bottom: 1.2rem;
+            color: var(--text-light);
         }
 
-        /* Fixed Avatar Styling */
+        .btn-download {
+            display: block;
+            text-align: center;
+            margin-top: 2.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--primary-yellow);
+            color: var(--bg-color);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: var(--glow);
+        }
+
+        .btn-download:hover {
+            background: var(--secondary-yellow);
+            color: var(--bg-color);
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.35);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1.8rem;
+            color: var(--primary-yellow);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--secondary-yellow);
+            transform: translateX(-3px);
+        }
+
+        /* Fixed Interactive Audio Guide Widget */
         .fixed-avatar-wrapper {
             position: fixed;
             bottom: 30px;
@@ -83,129 +68,125 @@
         }
 
         .avatar-icon {
-            font-size: 4em;
+            font-size: 3rem;
             cursor: pointer;
-            background: #fff;
+            background: rgba(22, 33, 62, 0.95);
+            backdrop-filter: blur(8px);
             border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
-            padding: 5px;
-            border: 3px solid transparent;
-        }
-
-        .avatar-icon.active {
-            border-color: var(--secondary-color);
-            animation: pulse 2s infinite;
+            box-shadow: var(--glow);
+            transition: all 0.3s ease;
+            padding: 10px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            user-select: none;
         }
 
         .avatar-icon:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--secondary-yellow);
+            background: rgba(255, 215, 0, 0.2);
         }
 
-        .speech-bubble {
-            background-color: var(--secondary-color);
-            color: #fff;
-            padding: 15px 20px;
-            border-radius: 8px;
-            font-size: 0.9em;
-            max-width: 250px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            text-align: left;
+        .avatar-icon.active {
+            border-color: var(--primary-yellow);
+            animation: yellowPulse 2s infinite;
+        }
+
+        .fixed-avatar-wrapper .speech-bubble {
+            visibility: visible;
+            opacity: 1;
             position: relative;
-            transition: opacity 0.3s;
+            bottom: auto;
+            left: auto;
+            margin-left: 0;
+            width: auto;
+            max-width: 270px;
+            margin-bottom: 12px;
+            line-height: 1.5;
         }
 
-        /* Bubble arrow */
-        .speech-bubble::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            right: 30px;
-            border-width: 10px 10px 0;
-            border-style: solid;
-            border-color: var(--secondary-color) transparent transparent transparent;
+        .fixed-avatar-wrapper .speech-bubble::after {
+            left: auto;
+            right: 28px;
+            margin-left: 0;
+            border-color: rgba(255, 215, 0, 0.3) transparent transparent transparent;
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 80, 158, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 80, 158, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 80, 158, 0); }
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-top: 30px;
-            color: var(--secondary-color);
-            text-decoration: none;
-            font-weight: bold;
+        @keyframes yellowPulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6); }
+            70% { box-shadow: 0 0 0 16px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
         }
     </style>
 </head>
 <body>
+    <!-- Navigation Bar matching index.html -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="article.html" class="nav-link active">Article</a>
+        </div>
+    </nav>
 
     <!-- Fixed Avatar that follows the user -->
     <div class="fixed-avatar-wrapper">
         <div class="speech-bubble" id="speechBubble">
             Olá! Clique em mim para ativar o Guia de Áudio. Eu explicarei o artigo conforme você rola a página.
         </div>
-        <div class="avatar-icon" id="avatarEmoji" onclick="toggleAudioGuide()">👨‍🏫</div>
+        <div class="avatar-icon" id="avatarEmoji" onclick="toggleAudioGuide()" title="Alternar Guia de Áudio">👨‍🏫</div>
     </div>
 
-    <div class="container">
-        <header>
-            <h1>Optimal Routing of Wide Multi-Modal Energy and Infrastructure Corridors</h1>
-            <h2>Mehdi Salamati, Xin Wang, Jennifer Winter and Hamidreza Zareipour</h2>
-            <h2>ISPRS Int. J. Geo-Inf. 2022</h2>
-        </header>
+    <!-- Main Content -->
+    <main>
+        <div class="content-card">
+            <header>
+                <h1>Optimal Routing of Wide Multi-Modal Energy and Infrastructure Corridors</h1>
+                <h2>Mehdi Salamati, Xin Wang, Jennifer Winter and Hamidreza Zareipour</h2>
+                <h2>ISPRS Int. J. Geo-Inf. 2022</h2>
+            </header>
 
-        <!-- Full Article Content Sections -->
-        <div id="content-wrapper">
-            
-            <section class="article-section" id="sec-abstract">
-                <h3>Abstract</h3>
-                <p>A multi-modal corridor accommodates multiple modes of energy and transportation infrastructure within the same right-of-way. The existing literature on corridor routing in raster space often focuses on one mode with no consideration of the width. This is not a realistic assumption, especially if multiple modes are to co-exist within the same wide right-of-way.</p>
-                <p>Moreover, newer routing methods that consider corridor width cannot take into account multi-modality and the arrangement of modes within a corridor. We developed two multi-modal wide-corridor routing methods using raster data. In the first method, the cost rasters of all modes are weighted and aggregated into a single composite on which a wide LCP is found. This wide LCP is then divided among the modes based on the desired arrangement.</p>
-                <p>The second method uses a directed transformed graph in which the weight of each edge is calculated using different layers of cost data based on the edge direction, the desired widths and arrangement of the modes. Comparative analyses using synthetic datasets show the superior performance of the second proposed method in finding a muti-modal corridor in comparison with the first mode, and in finding a single-modal corridor when compared to the existing methods.</p>
-            </section>
+            <div id="content-wrapper">
+                <section class="article-section" id="sec-abstract">
+                    <h3>Abstract</h3>
+                    <p>A multi-modal corridor accommodates multiple modes of energy and transportation infrastructure within the same right-of-way. The existing literature on corridor routing in raster space often focuses on one mode with no consideration of the width. This is not a realistic assumption, especially if multiple modes are to co-exist within the same wide right-of-way.</p>
+                    <p>Moreover, newer routing methods that consider corridor width cannot take into account multi-modality and the arrangement of modes within a corridor. We developed two multi-modal wide-corridor routing methods using raster data. In the first method, the cost rasters of all modes are weighted and aggregated into a single composite on which a wide LCP is found. This wide LCP is then divided among the modes based on the desired arrangement.</p>
+                    <p>The second method uses a directed transformed graph in which the weight of each edge is calculated using different layers of cost data based on the edge direction, the desired widths and arrangement of the modes. Comparative analyses using synthetic datasets show the superior performance of the second proposed method in finding a muti-modal corridor in comparison with the first mode, and in finding a single-modal corridor when compared to the existing methods.</p>
+                </section>
 
-            <section class="article-section" id="sec-intro">
-                <h3>1. Introduction</h3>
-                <p>This paper proposes two methods for finding a least-cost path (LCP) for wide multi-modal transportation corridors in raster space. A multi-modal transportation corridor contains two or more parallel transportation modes within the same right-of-way. Examples of multi-modal corridors include the Trans-European Transport Network, the Lamu Port South Sudan-Ethiopia Transport (LAPSSET) corridor, and Australia’s Callide infrastructure corridor.</p>
-                <p>Finding an optimal path for a multi-modal corridor is more complicated than a single-mode narrow path. This complexity has roots in the two main characteristics of such corridors. First, a multi-modal corridor needs to be wide enough to safely accommodate all transportation modes. Second, the path has to be acceptable for all different modes even though various modes have different movement constraints and different environmental impacts.</p>
-                <p>Cost raster data along with GIS are widely used for optimal linear infrastructure routing, such as power lines, road, railways and pipelines. In raster data format, the study area is divided into a square grid, and each grid cell has a value from specific criterion and geographic position. Generally, computerized routing methods integrate GIS tools and multi-criteria decision analysis (MCDA) to find an LCP in raster space.</p>
-            </section>
+                <section class="article-section" id="sec-intro">
+                    <h3>1. Introduction</h3>
+                    <p>This paper proposes two methods for finding a least-cost path (LCP) for wide multi-modal transportation corridors in raster space. A multi-modal transportation corridor contains two or more parallel transportation modes within the same right-of-way. Examples of multi-modal corridors include the Trans-European Transport Network, the Lamu Port South Sudan-Ethiopia Transport (LAPSSET) corridor, and Australia’s Callide infrastructure corridor.</p>
+                    <p>Finding an optimal path for a multi-modal corridor is more complicated than a single-mode narrow path. This complexity has roots in the two main characteristics of such corridors. First, a multi-modal corridor needs to be wide enough to safely accommodate all transportation modes. Second, the path has to be acceptable for all different modes even though various modes have different movement constraints and different environmental impacts.</p>
+                    <p>Cost raster data along with GIS are widely used for optimal linear infrastructure routing, such as power lines, road, railways and pipelines. In raster data format, the study area is divided into a square grid, and each grid cell has a value from specific criterion and geographic position. Generally, computerized routing methods integrate GIS tools and multi-criteria decision analysis (MCDA) to find an LCP in raster space.</p>
+                </section>
 
-            <section class="article-section" id="sec-related">
-                <h3>2. Related Work and Gaps</h3>
-                <p>Cost raster data and GIS are widely used to find LCPs for linear infrastructure such as roads, railways, power transmission lines, pipelines, and siting wildlife corridors. Each transportation mode’s important criteria and ranking is different. Some studies in the literature identify these factors and weighting methods for a specific type of infrastructure.</p>
-                <p>There are two challenges in finding the shortest path for a wide multi-modal corridor that make this process more complex than single-mode, narrow-path routing. First, there is little extant work on finding wide corridors. Second, current wide LCP-finding methods do not take into account the multi-modality of a corridor.</p>
-            </section>
+                <section class="article-section" id="sec-related">
+                    <h3>2. Related Work and Gaps</h3>
+                    <p>Cost raster data and GIS are widely used to find LCPs for linear infrastructure such as roads, railways, power transmission lines, pipelines, and siting wildlife corridors. Each transportation mode’s important criteria and ranking is different. Some studies in the literature identify these factors and weighting methods for a specific type of infrastructure.</p>
+                    <p>There are two challenges in finding the shortest path for a wide multi-modal corridor that make this process more complex than single-mode, narrow-path routing. First, there is little extant work on finding wide corridors. Second, current wide LCP-finding methods do not take into account the multi-modality of a corridor.</p>
+                </section>
 
-            <section class="article-section" id="sec-methodology">
-                <h3>3. Methodology</h3>
-                <p>We propose two methods for determining the optimal routing of wide multi-modal infrastructure corridors. The first one finds a wide LCP on the accumulated cost raster (FWLA). In FWLA, firstly, all cost rasters for all modes are weighted and aggregated to create a single composite cost raster and, secondly, a wide LCP is found on this cost raster.</p>
-            </section>
+                <section class="article-section" id="sec-methodology">
+                    <h3>3. Methodology</h3>
+                    <p>We propose two methods for determining the optimal routing of wide multi-modal infrastructure corridors. The first one finds a wide LCP on the accumulated cost raster (FWLA). In FWLA, firstly, all cost rasters for all modes are weighted and aggregated to create a single composite cost raster and, secondly, a wide LCP is found on this cost raster.</p>
+                </section>
 
-            <section class="article-section" id="sec-fwla">
-                <h3>3.1. Finding a Wide LCP on the Accumulated Cost Raster (FWLA)</h3>
-                <p>There are two challenges in finding the LCP of a multi-modal corridor—first, finding a wide rather than a narrow path, and second, each cell located in the found wide-LCP should be suitable and have a low cost for the mode in that cell. The first challenge can be addressed by any of the existing wide LCP method; however, the second challenge cannot be solved completely.</p>
-                <p>Existing wide LCP methods cannot take into account mode arrangement, i.e., the order of modes and the width of each. Thus, to make sure that each cell located in the corridor is suitable for its corresponding mode, the cell must be suitable for all modes. However, in this way, unnecessary constraints, i.e., to have low costs for all modes, will be imposed on the model and may result in non-optimal paths.</p>
-            </section>
+                <section class="article-section" id="sec-fwla">
+                    <h3>3.1. Finding a Wide LCP on the Accumulated Cost Raster (FWLA)</h3>
+                    <p>There are two challenges in finding the LCP of a multi-modal corridor—first, finding a wide rather than a narrow path, and second, each cell located in the found wide-LCP should be suitable and have a low cost for the mode in that cell. The first challenge can be addressed by any of the existing wide LCP method; however, the second challenge cannot be solved completely.</p>
+                    <p>Existing wide LCP methods cannot take into account mode arrangement, i.e., the order of modes and the width of each. Thus, to make sure that each cell located in the corridor is suitable for its corresponding mode, the cell must be suitable for all modes. However, in this way, unnecessary constraints, i.e., to have low costs for all modes, will be imposed on the model and may result in non-optimal paths.</p>
+                </section>
+            </div>
 
+            <a href="Article_Output.pdf" class="btn-download">Download PDF Completo</a>
+            <a href="index.html" class="back-link">← Voltar ao Perfil</a>
         </div>
+    </main>
 
-        <a href="Article_Output.pdf" style="display: block; text-align: center; margin-top: 30px; padding: 15px; background: #00509e; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Download PDF Completo</a>
-        <a href="index.html" class="back-link">← Voltar ao Perfil</a>
-    </div>
-
-    <!-- JavaScript Logic for Scroll-Triggered Text-to-Speech -->
+    <!-- JavaScript Audio Guide Logic -->
     <script>
-        // State variables
         let isAudioEnabled = false;
         let currentActiveSection = '';
 
-        // Dictionary containing the audio summaries for each section in Portuguese
         const sectionExplanations = {
             'sec-abstract': "Resumo: Este artigo analisa a criação de corredores que acomodam várias infraestruturas ao mesmo tempo, como rodovias e linhas de energia. Os autores propõem dois novos métodos para calcular a melhor rota considerando a largura real e a disposição de cada modalidade.",
             'sec-intro': "Introdução: Aqui, os pesquisadores explicam que planejar um corredor multimodal é complexo porque ele precisa ser largo o suficiente e atender às restrições ambientais e físicas de diferentes modos de transporte simultaneamente.",
@@ -214,7 +195,6 @@
             'sec-fwla': "Encontrando o caminho de menor custo: Esta subseção explica os desafios do primeiro método. Ao tentar acomodar tudo em um único mapa de custos, o algoritmo pode criar restrições desnecessárias, já que não leva em conta a ordem e a largura de cada modo dentro do corredor."
         };
 
-        // Function to toggle the audio guide on and off
         function toggleAudioGuide() {
             const avatar = document.getElementById('avatarEmoji');
             const bubble = document.getElementById('speechBubble');
@@ -229,15 +209,13 @@
                 avatar.classList.remove('active');
                 bubble.innerText = "Guia de áudio desativado. Clique em mim para reativar.";
                 window.speechSynthesis.cancel();
-                currentActiveSection = ''; // Reset section to allow replay if enabled again
+                currentActiveSection = '';
             }
         }
 
-        // Core function to synthesize speech
         function speakText(text) {
             if (!isAudioEnabled || !('speechSynthesis' in window)) return;
             
-            // Cancel any ongoing speech before starting a new one
             window.speechSynthesis.cancel();
             
             const utterance = new SpeechSynthesisUtterance(text);
@@ -248,20 +226,17 @@
             window.speechSynthesis.speak(utterance);
         }
 
-        // Intersection Observer configuration
         const observerOptions = {
             root: null,
-            rootMargin: '-20% 0px -60% 0px', // Triggers when the section is near the top of the viewport
+            rootMargin: '-20% 0px -60% 0px',
             threshold: 0
         };
 
-        // Callback function executed when a section enters the viewport
         const observerCallback = (entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const sectionId = entry.target.id;
                     
-                    // If the section changed and audio is enabled, read the new summary
                     if (currentActiveSection !== sectionId) {
                         currentActiveSection = sectionId;
                         
@@ -275,10 +250,8 @@
             });
         };
 
-        // Initialize the Intersection Observer
         const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-        // Attach the observer to all elements with the class 'article-section'
         document.addEventListener('DOMContentLoaded', () => {
             const sections = document.querySelectorAll('.article-section');
             sections.forEach(section => observer.observe(section));

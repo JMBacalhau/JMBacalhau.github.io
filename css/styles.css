@@ -1,0 +1,252 @@
+/* CSS variables for dark theme with yellow accents */
+:root {
+    --bg-color: #1a1a2e;
+    --card-bg: #16213e;
+    --primary-yellow: #ffd700;
+    --secondary-yellow: #f4d03f;
+    --text-light: #ffffff;
+    --text-muted: #b0b0b0;
+    --gradient-1: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    --glow: 0 4px 20px rgba(255, 215, 0, 0.2);
+}
+
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-light);
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+/* Animated gradient background */
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(255,215,0,0.03) 0%, transparent 60%);
+    animation: gradientFloat 20s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes gradientFloat {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-5%, -5%); }
+}
+
+/* Navigation bar */
+nav {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--glow);
+}
+
+.nav-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--primary-yellow);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-link:hover {
+    background: rgba(255, 215, 0, 0.15);
+    color: var(--secondary-yellow);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+
+.nav-link.active {
+    background: var(--primary-yellow);
+    color: var(--bg-color);
+}
+
+/* Main container */
+main {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.content-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 3rem;
+    border: 1px solid rgba(255, 215, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Header styling */
+header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+header h1 {
+    color: var(--primary-yellow);
+    margin: 0 0 0.5rem 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+header h2 {
+    color: var(--text-muted);
+    margin: 0;
+    font-weight: 400;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* Section styling */
+section {
+    margin-bottom: 2.5rem;
+}
+
+section h3 {
+    color: var(--secondary-yellow);
+    border-bottom: 1px solid rgba(244, 208, 63, 0.3);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+/* Lists and typography */
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin-bottom: 1.2rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--primary-yellow);
+}
+
+strong {
+    color: var(--secondary-yellow);
+}
+
+.date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.3rem;
+    font-style: italic;
+}
+
+/* Links */
+a {
+    color: var(--primary-yellow);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--secondary-yellow);
+    text-decoration: underline;
+}
+
+/* Speech bubble */
+.avatar-container {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.8rem;
+    cursor: pointer;
+}
+
+.avatar {
+    font-size: 1.2rem;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: var(--glow);
+    transition: all 0.3s ease;
+}
+
+.avatar:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255, 215, 0, 0.25);
+}
+
+.speech-bubble {
+    visibility: hidden;
+    width: 280px;
+    background: var(--card-bg);
+    color: var(--text-light);
+    text-align: left;
+    border-radius: 15px;
+    padding: 15px;
+    position: absolute;
+    z-index: 1;
+    bottom: 120%;
+    left: 50%;
+    margin-left: -140px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+    font-weight: normal;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: var(--glow);
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -10px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: rgba(255, 215, 0, 0.3) transparent transparent transparent;
+}
+
+.avatar-container:hover .speech-bubble {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Emphasis styling */
+em {
+    color: var(--secondary-yellow);
+    font-style: italic;
+}
+
+i {
+    color: var(--primary-yellow);
+}

@@ -4,222 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>João Marcus Ramos Bacalhau - Perfil Profissional</title>
-    <style>
-        /* CSS variables for theme colors */
-        :root {
-            --primary-color: #003366;
-            --secondary-color: #00509e;
-            --text-color: #333333;
-            --background-color: #f8f9fa;
-        }
-
-        /* Reset and base styles */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Main container layout */
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        /* Header styling */
-        header {
-            text-align: center;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        header h1 {
-            color: var(--primary-color);
-            margin: 0 0 10px 0;
-            font-size: 2.5em;
-        }
-
-        header h2 {
-            color: var(--secondary-color);
-            margin: 0;
-            font-weight: 400;
-            font-size: 1.2em;
-        }
-
-        /* Section layout */
-        section {
-            margin-bottom: 30px;
-        }
-
-        section h3 {
-            color: var(--primary-color);
-            border-bottom: 1px solid #eeeeee;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-        }
-
-        /* Lists and typography */
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 15px;
-        }
-
-        .date {
-            font-size: 0.9em;
-            color: #666666;
-            font-weight: bold;
-        }
-
-        .institution {
-            font-style: italic;
-        }
-
-        /* Avatar and Speech Bubble Styles */
-        .avatar-container {
-            display: inline-block;
-            position: relative;
-            margin-left: 10px;
-            cursor: pointer;
-            vertical-align: middle;
-        }
-
-        .avatar {
-            font-size: 1.5em;
-            background: var(--background-color);
-            border-radius: 50%;
-            padding: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-            display: inline-block;
-        }
-
-        .avatar:hover {
-            transform: scale(1.1);
-        }
-
-        .speech-bubble {
-            visibility: hidden;
-            width: 260px;
-            background-color: var(--secondary-color);
-            color: #ffffff;
-            text-align: left;
-            border-radius: 8px;
-            padding: 15px;
-            position: absolute;
-            z-index: 1;
-            bottom: 150%;
-            left: 50%;
-            margin-left: -130px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.85em;
-            font-weight: normal;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            line-height: 1.4;
-        }
-
-        /* Creates the little triangle pointer for the speech bubble */
-        .speech-bubble::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -10px;
-            border-width: 10px;
-            border-style: solid;
-            border-color: var(--secondary-color) transparent transparent transparent;
-        }
-
-        /* Shows the bubble when hovering over the avatar container */
-        .avatar-container:hover .speech-bubble {
-            visibility: visible;
-            opacity: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-link active" onclick="location.href='index.html'">Home</a>
+            <a href="article.html" class="nav-link">Article</a>
+        </div>
+    </nav>
+
     <!-- Main content wrapper -->
-    <div class="container">
-        <!-- Profile Header -->
-        <header>
-            <h1>João Marcus Ramos Bacalhau</h1>
-            <h2>Engenheiro Eletricista | Engenheiro de Planejamento na EDP Brasil</h2>
-        </header>
+    <main>
+        <div class="content-card">
+            <!-- Profile Header -->
+            <header>
+                <h1>João Marcus Ramos Bacalhau</h1>
+                <h2>Engenheiro Eletricista | Engenheiro de Planejamento na EDP Brasil</h2>
+            </header>
 
-        <!-- Professional Experience Section -->
-        <section>
-            <h3>Experiência Profissional</h3>
-            <ul>
-                <li>
-                    <strong>Engenheiro de Planejamento da Distribuição de Alta Tensão / Expansão</strong><br>
-                    <span class="institution">EDP Brasil, Vitória - ES</span><br>
-                    <span class="date">Novembro 2018 - Presente</span>
-                    <p>Atuação no planejamento de sistemas elétricos e representante técnico em acordos de cooperação técnica (Ifes - Campus Vitória), liderando projetos de pesquisa focados no aprimoramento da eficiência operacional.</p>
-                </li>
-            </ul>
-        </section>
+            <!-- Professional Experience Section -->
+            <section>
+                <h3>Experiência Profissional</h3>
+                <ul>
+                    <li>
+                        <strong>Engenheiro de Planejamento da Distribuição de Alta Tensão / Expansão</strong><br>
+                        <span class="institution">EDP Brasil, Vitória - ES</span><br>
+                        <span class="date">Novembro 2018 - Presente</span>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted);">Atuação no planejamento de sistemas elétricos e representante técnico em acordos de cooperação técnica (Ifes - Campus Vitória), liderando projetos de pesquisa focados no aprimoramento da eficiência operacional.</p>
+                    </li>
+                </ul>
+            </section>
 
-        <!-- Academic Background Section -->
-        <section>
-            <h3>Formação Acadêmica</h3>
-            <ul>
-                <li>
-                    <strong>Mestrado em Ciências (Engenharia Elétrica)</strong><br>
-                    <span class="institution">Universidade Federal do Espírito Santo (UFES)</span><br>
-                    <span class="date">2018 - 2020</span>
-                    <p>Linha de pesquisa em Processamento de Energia e Sistemas Elétricos. <br>
-                    <em>Dissertação:</em> "Missing Data Analysis and Imputation Method for Medium Voltage Distribution Network Feeders".</p>
-                </li>
-                <li>
-                    <strong>Bacharelado em Engenharia Elétrica</strong><br>
-                    <span class="institution">Instituto Federal do Espírito Santo (Ifes - Campus Vitória)</span><br>
-                    <span class="date">2010 - 2016</span>
-                </li>
-            </ul>
-        </section>
+            <!-- Academic Background Section -->
+            <section>
+                <h3>Formação Acadêmica</h3>
+                <ul>
+                    <li>
+                        <strong>Mestrado em Ciências (Engenharia Elétrica)</strong><br>
+                        <span class="institution">Universidade Federal do Espírito Santo (UFES)</span><br>
+                        <span class="date">2018 - 2020</span>
+                        <p style="margin-top: 0.5rem; color: var(--text-muted);">Linha de pesquisa em Processamento de Energia e Sistemas Elétricos.<br>
+                        <em>Dissertação:</em> "Missing Data Analysis and Imputation Method for Medium Voltage Distribution Network Feeders".</p>
+                    </li>
+                    <li>
+                        <strong>Bacharelado em Engenharia Elétrica</strong><br>
+                        <span class="institution">Instituto Federal do Espírito Santo (Ifes - Campus Vitória)</span><br>
+                        <span class="date">2010 - 2016</span>
+                    </li>
+                </ul>
+            </section>
 
-        <!-- Skills Section -->
-        <section>
-            <h3>Competências Técnicas</h3>
-            <ul>
-                <li>Linguagens de programação e pré-processamento de dados aplicados a redes elétricas.</li>
-                <li>Técnicas de análise e visualização de dados voltadas para redes de transmissão e distribuição interconectadas.</li>
-                <li>Modelagem e Análise de Fluxo de Potência (OpenDSS).</li>
-            </ul>
-        </section>
+            <!-- Skills Section -->
+            <section>
+                <h3>Competências Técnicas</h3>
+                <ul>
+                    <li>Linguagens de programação e pré-processamento de dados aplicados a redes elétricas.</li>
+                    <li>Técnicas de análise e visualização de dados voltadas para redes de transmissão e distribuição interconectadas.</li>
+                    <li>Modelagem e Análise de Fluxo de Potência (OpenDSS).</li>
+                </ul>
+            </section>
 
-        <!-- Publications Section -->
-        <section>
-            <h3>Publicações e Pesquisas</h3>
-            <ul>
-                <li>
-                    <strong>Artigo Científico:</strong> <a href="article.html" style="color: var(--secondary-color); text-decoration: none; font-weight: bold;">Multi-Objective Wide Corridor Routing: Enhancing Spatial Optimization for Infrastructure Planning</a>
-                    
-                    <!-- Avatar and Speech Bubble Container -->
-                    <div class="avatar-container">
-                        <span class="avatar">👨‍💻</span>
-                        <div class="speech-bubble">
-                            Hi! This paper introduces the MOA* algorithm to map wide infrastructure corridors, helping balance construction costs with environmental impacts. Click the link to read the abstract!
+            <!-- Publications Section -->
+            <section>
+                <h3>Publicações e Pesquisas</h3>
+                <ul>
+                    <li>
+                        <strong>Artigo Científico:</strong> 
+                        <a href="article.html" style="color: var(--primary-yellow); text-decoration: none;">Multi-Objective Wide Corridor Routing: Enhancing Spatial Optimization for Infrastructure Planning</a>
+                        
+                        <!-- Avatar and Speech Bubble Container -->
+                        <div class="avatar-container">
+                            <span class="avatar">👨‍💻</span>
+                            <div class="speech-bubble">
+                                Hi! This paper introduces the MOA* algorithm to map wide infrastructure corridors, helping balance construction costs with environmental impacts. Click the link to read the abstract!
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <strong>Pesquisa Aplicada:</strong> <em>"Índice de Remanejamento em SDMT - Planejamento da Distribuição"</em> (Material de pesquisa corporativa - EDP).
-                </li>
-            </ul>
-        </section>
-    </div>
+                    </li>
+                    <li>
+                        <strong>Pesquisa Aplicada:</strong> 
+                        <em>"Índice de Remanejamento em SDMT - Planejamento da Distribuição"</em> (Material de pesquisa corporativa - EDP).
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </main>
 </body>
 </html>
