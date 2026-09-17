@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Article - Optimal Routing of Wide Multi-Modal Energy</title>
+    <!-- External stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
     <style>
+        /* Article-specific styles */
         .article-section {
             margin-bottom: 2.5rem;
             text-align: justify;
@@ -54,6 +56,7 @@
             transform: translateX(-3px);
         }
 
+        /* Fixed interactive widgets wrapper */
         .fixed-avatar-wrapper {
             position: fixed;
             bottom: 30px;
@@ -61,7 +64,15 @@
             z-index: 1000;
             display: flex;
             align-items: flex-end;
+            flex-direction: row;
+            gap: 15px;
+        }
+
+        /* Avatar styles */
+        .avatar-container-col {
+            display: flex;
             flex-direction: column;
+            align-items: flex-end;
         }
 
         .avatar-icon {
@@ -88,24 +99,32 @@
             animation: yellowPulse 2s infinite;
         }
 
-        .fixed-avatar-wrapper .speech-bubble {
+        .speech-bubble {
             visibility: visible;
             opacity: 1;
             position: relative;
-            bottom: auto;
-            left: auto;
-            margin-left: 0;
-            width: auto;
+            background-color: var(--card-bg);
+            color: var(--text-light);
+            padding: 1rem 1.2rem;
+            border-radius: 14px;
+            font-size: 0.85rem;
             max-width: 270px;
             margin-bottom: 12px;
+            box-shadow: var(--glow);
+            text-align: left;
+            border: 1px solid rgba(255, 215, 0, 0.35);
             line-height: 1.5;
+            transition: opacity 0.3s ease;
         }
 
-        .fixed-avatar-wrapper .speech-bubble::after {
-            left: auto;
+        .speech-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
             right: 28px;
-            margin-left: 0;
-            border-color: rgba(255, 215, 0, 0.3) transparent transparent transparent;
+            border-width: 8px 8px 0;
+            border-style: solid;
+            border-color: rgba(255, 215, 0, 0.35) transparent transparent transparent;
         }
 
         @keyframes yellowPulse {
@@ -116,6 +135,7 @@
     </style>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav>
         <div class="nav-container">
             <a href="index.html" class="nav-link">Home</a>
@@ -123,19 +143,45 @@
         </div>
     </nav>
 
+    <!-- Fixed interactive widgets container -->
     <div class="fixed-avatar-wrapper">
-        <div class="speech-bubble" id="speechBubble">
-            Olá! Clique em mim para ativar o Guia de Áudio. Eu explicarei o artigo conforme você rola a página.
+        <!-- Audio guide avatar -->
+        <div class="avatar-container-col">
+            <div class="speech-bubble" id="speechBubble">
+                Olá! Clique em mim para ativar o Guia de Áudio. Eu explicarei o artigo conforme você rola a página.
+            </div>
+            <div class="avatar-icon" id="avatarEmoji" onclick="toggleAudioGuide()" title="Alternar Guia de Áudio">👨‍🏫</div>
         </div>
-        <div class="avatar-icon" id="avatarEmoji" onclick="toggleAudioGuide()" title="Alternar Guia de Áudio">👨‍🏫</div>
+
+        <!-- Chat toggle icon -->
+        <div class="chat-toggle-icon" id="chatToggle" onclick="toggleChat()" title="Chat with AI">💬</div>
+
+        <!-- Chat Window UI -->
+        <div class="chat-window" id="chatWindow">
+           <div class="chat-header">
+    <span>Article Assistant</span>
+    <div>
+        <button id="chatAudioBtn" onclick="toggleChatAudio()" title="Read AI Responses Aloud" style="margin-right: 8px;">🔇</button>
+        <button onclick="toggleChat()">✕</button>
+    </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai-message">Hello! I'm connected to your local model. Ask me anything about the article.</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
     </div>
 
+    <!-- Main Content -->
     <main>
         <div class="content-card">
             <header>
                 <h1>Optimal Routing of Wide Multi-Modal Energy and Infrastructure Corridors</h1>
-                <h2>Mehdi Salamati, Xin Wang, Jennifer Winter and Hamidreza Zareipour</h2>
-                <h2>ISPRS Int. J. Geo-Inf. 2022</h2>
+                <h2>João Marcus Ramos Bacalhau</h2>
+                <h2>2026</h2>
             </header>
 
             <div id="content-wrapper">
