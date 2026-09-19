@@ -4,6 +4,13 @@ let currentActiveSection = '';
 let isChatOpen = false;
 let chatHistory = [];
 
+// Configuration (Consider moving sensitive values to a secure backend or environment variables)
+const API_CONFIG = {
+    BASE_URL: "https://precook-grew-starting.ngrok-free.dev/v1",
+    KEY: "lm-studio",
+    MODEL: "qwen/qwen3.5-9b"
+};
+
 // Controls whether the AI reads its answers out loud
 let isChatAudioEnabled = false;
 
@@ -29,11 +36,6 @@ const sectionExplanations = {
     'sec-methodology': "Metodologia: Os autores propõem duas abordagens. A primeira agrega os custos de todos os modos em um único mapa e calcula a rota. Vamos ver os detalhes a seguir.",
     'sec-fwla': "Encontrando o caminho de menor custo: Esta subseção explica os desafios do primeiro método. Ao tentar acomodar tudo em um único mapa de custos, o algoritmo pode criar restrições desnecessárias, já que não leva em conta a ordem e a largura de cada modo dentro do corredor."
 };
-
-// Configuration matching your Continue setup
-const API_BASE = "https://precook-grew-starting.ngrok-free.dev/v1";
-const API_KEY = "lm-studio";
-const MODEL_NAME = "qwen/qwen3.5-9b"; 
 
 // Function to scrape the article text from the HTML
 function getArticleContext() {
@@ -67,14 +69,12 @@ function toggleAudioGuide() {
 
 // Core function to synthesize speech
 function speakText(text) {
-    // A trava do isAudioEnabled foi removida desta linha
     if (!('speechSynthesis' in window)) return;
     
     window.speechSynthesis.cancel();
     
     const utterance = new SpeechSynthesisUtterance(text);
-    // Dica: você pode mudar para 'en-US' se o modelo responder primariamente em inglês
-    utterance.lang = 'en-US';
+    utterance.lang = 'pt-BR'; // Changed to Portuguese to match explanations
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
 
@@ -140,20 +140,21 @@ async function sendMessage() {
     const loadingDiv = document.createElement('div');
     loadingDiv.className = 'loading-indicator';
     loadingDiv.id = 'loadingIndicator';
-    loadingDiv.textContent = 'Qwen is typing...';
+    loadingDiv.style.display = 'block'; // Ensure it's visible
+    loadingDiv.textContent = 'Assistant is typing...';
     chatMessages.appendChild(loadingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
     try {
-        const response = await fetch(`${API_BASE}/chat/completions`, {
+        const response = await fetch(`${API_CONFIG.BASE_URL}/chat/completions`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${API_KEY}`,
+                'Authorization': `Bearer ${API_CONFIG.KEY}`,
                 'ngrok-skip-browser-warning': 'true'
             },
             body: JSON.stringify({
-                model: MODEL_NAME,
+                model: API_CONFIG.MODEL,
                 messages: chatHistory,
                 temperature: 0.7,
                 max_tokens: 500
@@ -172,15 +173,15 @@ async function sendMessage() {
         appendMessage('assistant', aiResponse);
         chatHistory.push({ role: "assistant", content: aiResponse });
 
-        // ADD THIS: Read the response if the speaker is toggled on
         if (isChatAudioEnabled) {
             speakText(aiResponse);
         }
 
     } catch (error) {
         console.error("Error communicating with local LLM:", error);
-        document.getElementById('loadingIndicator').remove();
-        appendMessage('assistant', 'Sorry, I encountered an error connecting to the local model. Make sure LM Studio is running and the ngrok tunnel is active.');
+        const indicator = document.getElementById('loadingIndicator');
+        if (indicator) indicator.remove();
+        appendMessage('assistant', 'Desculpe, encontrei um erro ao conectar ao modelo. Verifique se o servidor está ativo.');
     }
 }
 
@@ -218,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatHistory = [
         { 
             role: "system", 
-            content: `You are a helpful AI assistant integrated into a web page. The user is reading a scientific article. Here is the full text of the article available on the page:\n\n${articleContext}\n\nAnswer the user's questions accurately based ONLY on this text. If the answer is not in the text, say you don't know.` 
+            content: `You are a helpful AI assistant integrated into a web page. The user is reading a scientific article. Here is the full text of the article available on the page:\n\n${articleContext}\n\nAnswer the user's questions accurately based ONLY on this text. Respond in the same language as the user's query (usually Portuguese or English). If the answer is not in the text, say you don't know.` 
         }
     ];
 

@@ -132,6 +132,11 @@ section {
     margin-bottom: 2.5rem;
 }
 
+section p.text-muted {
+    margin-top: 0.5rem;
+    color: var(--text-muted);
+}
+
 section h3 {
     color: var(--secondary-yellow);
     border-bottom: 1px solid rgba(244, 208, 63, 0.3);
@@ -405,7 +410,114 @@ i {
     display: none;
 }
 
+.article-link {
+    color: var(--primary-yellow);
+    text-decoration: none;
+}
+
+.article-link:hover {
+    text-decoration: underline;
+}
+
 /* Ensure the chat window stays above all other floating elements */
 .chat-window {
     z-index: 9999;
+}
+
+/* Article-specific styles */
+.article-section {
+    margin-bottom: 2.5rem;
+    text-align: justify;
+    scroll-margin-top: 80px;
+}
+
+.article-section p {
+    margin-bottom: 1.2rem;
+    color: var(--text-light);
+}
+
+.btn-download {
+    display: block;
+    text-align: center;
+    margin-top: 2.5rem;
+    padding: 1rem 1.5rem;
+    background: var(--primary-yellow);
+    color: var(--bg-color);
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: var(--glow);
+}
+
+.btn-download:hover {
+    background: var(--secondary-yellow);
+    color: var(--bg-color);
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(255, 215, 0, 0.35);
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 1.8rem;
+    color: var(--primary-yellow);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--secondary-yellow);
+    transform: translateX(-3px);
+}
+
+/* Fixed interactive widgets wrapper */
+.fixed-avatar-wrapper {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    gap: 15px;
+}
+
+/* Avatar styles */
+.avatar-container-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.avatar-icon {
+    font-size: 3rem;
+    cursor: pointer;
+    background: rgba(22, 33, 62, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 50%;
+    box-shadow: var(--glow);
+    transition: all 0.3s ease;
+    padding: 10px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    user-select: none;
+}
+
+.avatar-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+    border-color: var(--secondary-yellow);
+    background: rgba(255, 215, 0, 0.2);
+}
+
+.avatar-icon.active {
+    border-color: var(--primary-yellow);
+    animation: yellowPulse 2s infinite;
+}
+
+@keyframes yellowPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6); }
+    70% { box-shadow: 0 0 0 16px rgba(255, 215, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
 }
