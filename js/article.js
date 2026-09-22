@@ -74,7 +74,7 @@ function speakText(text) {
     window.speechSynthesis.cancel();
     
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'pt-BR'; // Changed to Portuguese to match explanations
+    utterance.lang = 'en-US'; // Changed to Portuguese to match explanations
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
 
