@@ -58,7 +58,12 @@ function toggleSpeechRecognition() {
 
 function startListening() {
     isListening = true;
-    recognition.start();
+    if (recognition) {
+        // Re-instantiate or reset properties to ensure English is forced
+        recognition.lang = 'en-US'; 
+        console.log("Starting speech recognition with language:", recognition.lang);
+        recognition.start();
+    }
     const micBtn = document.getElementById('micBtn');
     micBtn.textContent = '🛑';
     micBtn.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
@@ -134,7 +139,19 @@ function speakText(text) {
     window.speechSynthesis.cancel();
     
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US'; // Changed to English
+    
+    // Explicitly set English and look for an English voice
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length > 0) {
+        // Try to find a US English voice, otherwise fallback to any English voice
+        const enVoice = voices.find(v => v.lang === 'en-US') || voices.find(v => v.lang.startsWith('en'));
+        if (enVoice) {
+            utterance.voice = enVoice;
+        }
+    }
+
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
 
