@@ -401,6 +401,27 @@ i {
     transform: scale(1.05);
 }
 
+#micBtn {
+    background: none;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-light);
+}
+
+#micBtn:hover {
+    background: rgba(255, 215, 0, 0.1);
+    transform: scale(1.1);
+}
+
 .loading-indicator {
     font-size: 0.8rem;
     color: var(--text-muted);

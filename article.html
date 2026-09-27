@@ -41,10 +41,11 @@
             <div class="chat-messages" id="chatMessages">
                 <div class="message ai-message">Hello! I'm connected to your local model. Ask me anything about the article.</div>
             </div>
-            <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
-                <button onclick="sendMessage()">Send</button>
-            </div>
+                        <div class="chat-input-area">
+                            <button id="micBtn" onclick="toggleSpeechRecognition()" title="Voice Input">🎤</button>
+                            <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatEnter(event)">
+                            <button onclick="sendMessage()">Send</button>
+                        </div>
         </div>
     </div>
 

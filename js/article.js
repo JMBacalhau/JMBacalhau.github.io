@@ -8,11 +8,71 @@ let chatHistory = [];
 const API_CONFIG = {
     BASE_URL: "https://precook-grew-starting.ngrok-free.dev/v1",
     KEY: "lm-studio",
-    MODEL: "qwen/qwen3.5-9b"
+    MODEL: "qwen/qwen3-4b-2507"
 };
 
 // Controls whether the AI reads its answers out loud
 let isChatAudioEnabled = false;
+
+// Speech recognition setup
+let recognition;
+let isListening = false;
+
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'pt-BR'; // Match the article language
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        const input = document.getElementById('chatInput');
+        input.value = transcript;
+        stopListening();
+        sendMessage();
+    };
+
+    recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        stopListening();
+    };
+
+    recognition.onend = () => {
+        stopListening();
+    };
+}
+
+function toggleSpeechRecognition() {
+    if (!recognition) {
+        alert("Speech Recognition is not supported in this browser.");
+        return;
+    }
+
+    if (isListening) {
+        stopListening();
+    } else {
+        startListening();
+    }
+}
+
+function startListening() {
+    isListening = true;
+    recognition.start();
+    const micBtn = document.getElementById('micBtn');
+    micBtn.textContent = '🛑';
+    micBtn.style.backgroundColor = 'rgba(255, 0, 0, 0.2)';
+    micBtn.style.borderColor = 'red';
+}
+
+function stopListening() {
+    isListening = false;
+    if (recognition) recognition.stop();
+    const micBtn = document.getElementById('micBtn');
+    micBtn.textContent = '🎤';
+    micBtn.style.backgroundColor = 'transparent';
+    micBtn.style.borderColor = 'rgba(255, 215, 0, 0.3)';
+}
 
 function toggleChatAudio() {
     isChatAudioEnabled = !isChatAudioEnabled;
