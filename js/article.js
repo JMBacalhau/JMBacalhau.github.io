@@ -23,7 +23,7 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
     recognition = new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = false;
-    recognition.lang = 'pt-BR'; // Match the article language
+    recognition.lang = 'en-US'; // Match the article language
 
     recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
@@ -88,13 +88,13 @@ function toggleChatAudio() {
     }
 }
 
-// Dictionary containing the audio summaries for each section in Portuguese
+// Dictionary containing the audio summaries for each section in English
 const sectionExplanations = {
-    'sec-abstract': "Resumo: Este artigo analisa a criação de corredores que acomodam várias infraestruturas ao mesmo tempo, como rodovias e linhas de energia. Os autores propõem dois novos métodos para calcular a melhor rota considerando a largura real e a disposição de cada modalidade.",
-    'sec-intro': "Introdução: Aqui, os pesquisadores explicam que planejar um corredor multimodal é complexo porque ele precisa ser largo o suficiente e atender às restrições ambientais e físicas de diferentes modos de transporte simultaneamente.",
-    'sec-related': "Trabalhos Relacionados e Lacunas: Nesta parte, o artigo revisa a literatura existente, apontando que a maioria dos métodos atuais ignora a largura do corredor ou falha em considerar as necessidades específicas de múltiplas modalidades.",
-    'sec-methodology': "Metodologia: Os autores propõem duas abordagens. A primeira agrega os custos de todos os modos em um único mapa e calcula a rota. Vamos ver os detalhes a seguir.",
-    'sec-fwla': "Encontrando o caminho de menor custo: Esta subseção explica os desafios do primeiro método. Ao tentar acomodar tudo em um único mapa de custos, o algoritmo pode criar restrições desnecessárias, já que não leva em conta a ordem e a largura de cada modo dentro do corredor."
+    'sec-abstract': "Abstract: This article analyzes the creation of corridors that accommodate multiple infrastructures at the same time, such as highways and power lines. The authors propose two new methods to calculate the best route considering the real width and arrangement of each mode.",
+    'sec-intro': "Introduction: Here, the researchers explain that planning a multi-modal corridor is complex because it must be wide enough and meet the environmental and physical constraints of different transportation modes simultaneously.",
+    'sec-related': "Related Work and Gaps: In this part, the article reviews existing literature, pointing out that most current methods ignore corridor width or fail to consider the specific needs of multiple modes.",
+    'sec-methodology': "Methodology: The authors propose two approaches. The first aggregates costs of all modes into a single map and calculates the route. We'll see the details next.",
+    'sec-fwla': "Finding the Least Cost Path: This subsection explains the challenges of the first method. By trying to accommodate everything in a single cost map, the algorithm may create unnecessary constraints, as it does not account for the order and width of each mode within the corridor."
 };
 
 // Function to scrape the article text from the HTML
@@ -117,11 +117,11 @@ function toggleAudioGuide() {
 
     if (isAudioEnabled) {
         avatar.classList.add('active');
-        bubble.innerText = "Guia ativado! Role a página lentamente para ouvir a explicação de cada parte.";
-        speakText("Guia de áudio ativado. Role a página para que eu explique o conteúdo para você.");
+        bubble.innerText = "Guide activated! Scroll down slowly to hear the explanation for each part.";
+        speakText("Audio guide activated. Scroll the page so I can explain the content to you.");
     } else {
         avatar.classList.remove('active');
-        bubble.innerText = "Guia de áudio desativado. Clique em mim para reativar.";
+        bubble.innerText = "Audio guide deactivated. Click me to reactivate.";
         window.speechSynthesis.cancel();
         currentActiveSection = ''; 
     }
@@ -134,7 +134,7 @@ function speakText(text) {
     window.speechSynthesis.cancel();
     
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US'; // Changed to Portuguese to match explanations
+    utterance.lang = 'en-US'; // Changed to English
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
 
@@ -241,7 +241,7 @@ async function sendMessage() {
         console.error("Error communicating with local LLM:", error);
         const indicator = document.getElementById('loadingIndicator');
         if (indicator) indicator.remove();
-        appendMessage('assistant', 'Desculpe, encontrei um erro ao conectar ao modelo. Verifique se o servidor está ativo.');
+        appendMessage('assistant', 'Sorry, I encountered an error connecting to the model. Please check if the server is active.');
     }
 }
 
@@ -262,7 +262,7 @@ const observerCallback = (entries) => {
                 
                 if (isAudioEnabled && sectionExplanations[sectionId]) {
                     const sectionTitle = entry.target.querySelector('h3').innerText;
-                    document.getElementById('speechBubble').innerText = "Explicando agora: " + sectionTitle;
+                    document.getElementById('speechBubble').innerText = "Explaining now: " + sectionTitle;
                     speakText(sectionExplanations[sectionId]);
                 }
             }
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatHistory = [
         { 
             role: "system", 
-            content: `You are a helpful AI assistant integrated into a web page. The user is reading a scientific article. Here is the full text of the article available on the page:\n\n${articleContext}\n\nAnswer the user's questions accurately based ONLY on this text. Respond in the same language as the user's query (usually Portuguese or English). If the answer is not in the text, say you don't know.` 
+            content: `You are a helpful AI assistant integrated into a web page. The user is reading a scientific article. Here is the full text of the article available on the page:\n\n${articleContext}\n\nAnswer the user's questions accurately based ONLY on this text. All responses must be in English. If the answer is not in the text, say you don't know.` 
         }
     ];
 
